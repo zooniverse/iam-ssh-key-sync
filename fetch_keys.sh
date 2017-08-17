@@ -39,6 +39,11 @@ do
         OUTPUT="$(mktemp)"
     fi
 
+    if [ ! -z "$EXTRA_KEYS" ]
+    then
+        _echo "$EXTRA_KEYS"
+    fi
+
     USER_LIST=$($AWS iam get-group --group-name $1 | \
         jshon -e Users -a -e UserName -u
     )
