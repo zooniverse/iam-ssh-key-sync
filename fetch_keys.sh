@@ -14,6 +14,11 @@ else
     UPDATE_DELAY=$3
 fi
 
+if [ ! -z "$4" ]
+then
+    OUTPUT_UID=$4
+fi
+
 function _echo {
     if [ -z "$OUTPUT" ]
     then
@@ -58,6 +63,10 @@ do
 
     if [ ! -z "$OUTPUT" ]
     then
+        if [ ! -z "$OUTPUT_UID" ]
+        then
+            chown $OUTPUT_UID $OUTPUT
+        fi
         mv -f $OUTPUT $2
     fi
 
