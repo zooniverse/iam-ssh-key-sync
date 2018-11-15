@@ -52,8 +52,13 @@ do
     do
         KEY_IDS=$($AWS iam list-ssh-public-keys --user-name $USER_NAME | \
             jshon -e SSHPublicKeys -a -e Status -u -p -e SSHPublicKeyId -u | \
-            grep -A1 Active | grep -v Active | grep -E "[A-Z0-9]+"
+            grep -A1 Active | grep -v Active | grep -E "[A-Z0-9]+" || true
         )
+
+        if [ -z "$KEY_IDS" ]
+        then
+            continue
+        fi
 
         for KEY_ID in $KEY_IDS
         do
